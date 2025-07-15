@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { BiSearch, BiCurrentLocation } from "react-icons/bi";
 import PropTypes from "prop-types";
-import { getGeoData } from "../../services/weatherapi";
-// import getFormatData from "../../services/weatherapi";
-// import getFormatData, { getWeatherData } from "../../services/weatherapi";
+import { getGeoData } from "../../services/Weatherapi";
 
 export default function SearchBar({
   setQuery,
