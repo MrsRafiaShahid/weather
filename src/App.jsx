@@ -6,9 +6,9 @@ import Forecast from "./Component/Layout/Forecast";
 
 import { ToastContainer, toast } from "react-toastify";
 import { useCallback, useEffect, useState } from "react";
-import getFormatData from "./services/weatherapi";
 
 import "react-toastify/dist/ReactToastify.css";
+import getFormatData from "./services/Weatherapi";
 
 function capitalizeFirstLetter(val) {
   return String(val).charAt(0).toUpperCase() + String(val).slice(1);
