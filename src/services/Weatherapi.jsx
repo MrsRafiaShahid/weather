@@ -2,10 +2,10 @@ import axios from "axios";
 import { DateTime } from "luxon";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
-// console.log(API_KEY);
+console.log("API Key",API_KEY);
 
 const BASE_URL = import.meta.env.VITE_BASE_URL ;
-// console.log("BASE URL",BASE_URL);
+console.log("BASE URL",BASE_URL);
 
 const getWeatherData = (infoType, searchParams) => {
   const url = `${BASE_URL}${infoType}?${new URLSearchParams({

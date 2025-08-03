@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiSearch, BiCurrentLocation } from "react-icons/bi";
 import PropTypes from "prop-types";
 import { getGeoData } from "../../services/Weatherapi";
@@ -13,6 +13,7 @@ export default function SearchBar({
 }) {
   const [city, setCity] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const searchContainerRef = useRef(null);
   useEffect(() => {
     // If there is no text, clear suggestions
     if (!city.trim()) {
@@ -49,6 +50,19 @@ export default function SearchBar({
     setSuggestions([]);
     setQuery({ lat: suggestion.lat, lon: suggestion.lon });
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchContainerRef.current && 
+          !searchContainerRef.current.contains(event.target)) {
+        setSuggestions([]);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const handleLocationChange = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -65,11 +79,11 @@ export default function SearchBar({
 
   return (
     <>
-      <div className="flex flex-col md:flex-row w-[15rem] md:w-full items-center justify-center my-6">
-        <div className=" flex items-center justify-center space-x-4 w-full md:w-3/6 ">
+      <div ref={searchContainerRef} className="flex flex-col w-full items-center justify-center my-4">
+        <div className="flex items-center justify-center w-full max-w-md">
           <input
             type="text"
-            className="search text-gray-300 text-xl w-full shadow-xl font-light rounded-2xl rounded-b-none border-b-2 border-b-violet-200 focus:outline-none p-2 capitalize placeholder:lowercase"
+            className="search text-gray-300 text-sm md:text-xl w-full shadow-xl font-light rounded-2xl rounded-b-none border-b-2 border-b-violet-200 focus:outline-none p-2 capitalize placeholder:lowercase"
             placeholder="Search.."
             value={city}
             onChange={(e) => setCity(e.target.value)}
@@ -87,7 +101,7 @@ export default function SearchBar({
           />
         </div>
 
-        <div className="flex mt-4 md:mt-0 flex-row w-1/5 items-center justify-center">
+        <div className="flex  flex-nowrap mt-4 w-full justify-center">
           <button
             className="md:text-2xl text-xl font-medium transition ease-out hover:scale-150"
             onClick={() => setUnits("metric")}
@@ -110,11 +124,11 @@ export default function SearchBar({
         )}
         {error && <div className="mt-2 text-red-500">{error}</div>}
         {suggestions.length > 0 && (
-          <ul className="w-1/4 absolute top-full left-4 z-50  mt-1 shadow-lg rounded-b-2xl ">
+          <ul className="w-full md:w-full  absolute top-full left-4 z-100  mt-1 shadow-lg rounded-b-2xl ">
             {suggestions.map((suggestion, index) => (
               <li
                 key={index}
-                className="p-2 cursor-pointer hover:text-amber-200 hover:text-xl transition-colors"
+                className="px-14 w-full hover:bg-slate-700 hover:text-amber-200 transition-colors flex justify-center items-center bg-slate-700"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
                 {suggestion.name}

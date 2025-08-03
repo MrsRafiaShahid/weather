@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import "react-toastify/dist/ReactToastify.css";
 import getFormatData from "./services/Weatherapi";
+import Loading from "./Component/Layout/Loading";
 
 function capitalizeFirstLetter(val) {
   return String(val).charAt(0).toUpperCase() + String(val).slice(1);
@@ -34,20 +35,54 @@ const App = () => {
     getWeather();
   }, [query, units, getWeather]);
 
-  if (!weather) return <div>Loading...</div>;
+  if (!weather) return <Loading />;
   const formatBackground = () => {
-    const currentTime = Math.floor(Date.now() / 1000); // current time in seconds
-    const sunriseTime = weather.sunrise;
-    const sunsetTime = weather.sunset;
+    const currentTime = Math.floor(Date.now() / 1000);
+    const isDaytime =
+      currentTime >= weather.sunrise && currentTime < weather.sunset;
+    const weatherCondition = weather.details.toLowerCase();
 
-    return currentTime >= sunriseTime && currentTime < sunsetTime
-      ? "from-cyan-300 to-blue-800"
-      : "from-gray-700 to-black";
+    // Daytime backgrounds
+    if (isDaytime) {
+      switch (weatherCondition) {
+        case "clear":
+          return "from-cyan-300 to-blue-800"; // Sunny day
+        case "clouds":
+          return "from-gray-300 to-gray-600"; // Cloudy day
+        case "rain":
+        case "drizzle":
+          return "from-gray-400 to-blue-900"; // Rainy day
+        case "thunderstorm":
+          return "from-purple-700 to-gray-900"; // Stormy day
+        case "snow":
+          return "from-blue-100 to-blue-400"; // Snowy day
+        default:
+          return "from-cyan-300 to-blue-800"; // Default daytime
+      }
+    }
+    // Nighttime backgrounds
+    else {
+      switch (weatherCondition) {
+        case "clear":
+          return "from-gray-800 to-black"; // Clear night
+        case "clouds":
+          return "from-gray-700 to-gray-900"; // Cloudy night
+        case "rain":
+        case "drizzle":
+          return "from-gray-800 to-blue-950"; // Rainy night
+        case "thunderstorm":
+          return "from-purple-900 to-black"; // Stormy night
+        case "snow":
+          return "from-blue-800 to-gray-900"; // Snowy night
+        default:
+          return "from-gray-700 to-black"; // Default nighttime
+      }
+    }
   };
   return (
     <>
       <div
-        className={`mx-auto max-w-screen max-h-screen-lg py-5 px-32 bg-gradient-to-br ${formatBackground()}`}
+        className={`mx-auto max-w-screen-lg md:max-w-screen w-full py-5 px-4 md:px-32 bg-gradient-to-br ${formatBackground()}`}
       >
         <Buttons setQuery={setQuery} />
         <SearchBar
@@ -62,8 +97,10 @@ const App = () => {
           <>
             <TimeLocation weather={weather} />
             <TempDetails weather={weather} units={units} />
-            <Forecast title="3 hour Forcast" data={weather.hourly} />
-            <Forecast title="Daily Forecast" data={weather.daily} />
+            <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900 py-5 px-4 md:px-32">
+              <Forecast title="3 hour Forcast" data={weather.hourly} />
+              <Forecast title="Daily Forecast" data={weather.daily} />
+            </div>
           </>
         )}
         <ToastContainer

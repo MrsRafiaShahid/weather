@@ -18,7 +18,7 @@ const Buttons = ({ setQuery }) => {
     const savedCities = localStorage.getItem("userCities");
     return savedCities ? JSON.parse(savedCities) : initialCities;
   });
-  
+
   const [newCity, setNewCity] = useState("");
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -34,16 +34,16 @@ const Buttons = ({ setQuery }) => {
   const handleAddCity = () => {
     if (newCity.trim() !== "") {
       const cityExists = cities.some(
-        city => city.name.toLowerCase() === newCity.trim().toLowerCase()
+        (city) => city.name.toLowerCase() === newCity.trim().toLowerCase()
       );
-      
+
       if (!cityExists) {
         const newCityObj = {
           id: Date.now(), // Unique ID
-          name: newCity.trim()
+          name: newCity.trim(),
         };
-        
-        setCities(prev => [...prev, newCityObj]);
+
+        setCities((prev) => [...prev, newCityObj]);
         setNewCity("");
         setShowAddForm(false);
       } else {
@@ -54,15 +54,15 @@ const Buttons = ({ setQuery }) => {
 
   const handleRemoveCity = (id, e) => {
     e.stopPropagation();
-    setCities(prev => prev.filter(city => city.id !== id));
+    setCities((prev) => prev.filter((city) => city.id !== id));
   };
 
   return (
-    <div className="flex overflow-y-auto items-center justify-center gap-2 my-4">
+    <div className="flex overflow-x-auto items-center justify-start gap-2 my-4 py-2 w-full scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900">
       {cities.map((city) => (
         <div key={city.id} className="relative group">
           <button
-            className="text-lg font-medium hover:bg-cyan-400/20 px-3 py-2 rounded-md transition ease-in"
+            className="text-sm md:text-lg font-medium hover:bg-cyan-400/20 px-3 py-2 rounded-md transition ease-in"
             onClick={() => handleCityChange(city)}
           >
             {city.name}
@@ -88,17 +88,17 @@ const Buttons = ({ setQuery }) => {
           <span className="mr-1 ml-1">+</span>
         </button>
       ) : (
-        <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
           <input
             type="text"
             value={newCity}
             onChange={(e) => setNewCity(e.target.value)}
             placeholder="Enter city"
-            className="text-lg px-3 py-2 rounded-md border border-gray-300"
+            className="text-sm md:text-lg px-2 md:px-3 py-1 md:py-2 rounded-md border border-gray-300"
             autoFocus
           />
           <button
-            className="text-lg font-medium bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md"
+            className="text-sm md:text-lg font-medium  bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md"
             onClick={handleAddCity}
           >
             Add

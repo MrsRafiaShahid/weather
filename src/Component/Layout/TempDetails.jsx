@@ -91,16 +91,16 @@ const TempDetails = ({
   ];
   return (
     <>
-      <div className="flex  justify-center items-center text-xl text-cyan-300">
+      <div className="flex flex-col md:flex-row justify-around items-center text-xl text-cyan-300">
         <p className="">{details}</p>
       </div>
-      <div className="flex flex-col md:flex-row justify-around items-center py-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5 py-3">
         <img
           src={icon}
           alt="weather-icon"
         />
         <p className="text-white mx-auto text-5xl">{`${temp.toFixed()}°${units === "metric" ? 'C' : 'F'}`}</p>
-        <div className="grid w-[15rem] md:w-full grid-cols-2 md:grid-cols-3 gap-1.5 space-y-3 py-3 items-start">
+        <div className="grid w-full max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900  md:w-full grid-cols-2 md:grid-cols-3 gap-1.5 space-y-3 py-3 items-start">
           {Vdetails.map(({ id, Icon, value, title }) => {
             return (
               <div key={id} className="flex text-sm font-light ">
@@ -115,7 +115,7 @@ const TempDetails = ({
         </div>
       </div>
 
-      <div className="flex flex-wrap md:flex-nowrap gap-2  w-[15rem] md:w-full items-center justify-center py-3 space-x-10 text-sm">
+      <div className="flex flex-wrap justify-center gap-4 py-3">
         {Hdetails.map(({ id, Icon, value, title }) => {
           return (
             <div key={id} className="flex text-sm font-light ">
