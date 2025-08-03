@@ -14,7 +14,7 @@ A sleek and responsive weather forecasting web app built with **React**, styled 
 - 📆 **Hourly & Daily Forecasts:** View weather predictions for the next hours and upcoming days
 - 🌅 **Sunrise & Sunset:** Displays exact times for sunrise and sunset
 - 📈 **High/Low Temperature:** Highlights daily high and low temperatures
-- 🌙 **Dynamic Backgrounds:** Changes theme automatically for day and night ,rain/snow/stromy/  clear/clouds conditions
+- 🌙 **Dynamic Backgrounds:** Changes theme automatically for day and night ,rain/snow/stromy/clear/clouds conditions
 
 ---
 
@@ -29,7 +29,7 @@ A sleek and responsive weather forecasting web app built with **React**, styled 
 
 ## 📸 Screenshots
 
-> <img src="/public/weather.png">
+> <img src="/public/weather.png"/>
 
 ---
 
