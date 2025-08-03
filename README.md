@@ -29,7 +29,7 @@ A sleek and responsive weather forecasting web app built with **React**, styled 
 
 ## 📸 Screenshots
 
-> <img src="/weather.png">
+> <img src="/public/weather.png">
 
 ---
 
