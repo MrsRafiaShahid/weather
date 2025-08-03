@@ -31,6 +31,7 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #475569; /* slate-600 */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 /* For Firefox */
